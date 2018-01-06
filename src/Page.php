@@ -135,10 +135,10 @@ class Page implements Renderable
                 <loc>%s</loc>
                 %s
                 %s
-                <priority>%f</priority>
+                <priority>%.2f</priority>
                 %s
             </url>
-        ', $this->location(), $this->renderLanguageLinks(), $lastModifiedTag, round($this->priority(), 2), $this->renderImages());
+        ', $this->location(), $this->renderLanguageLinks(), $lastModifiedTag, $this->priority(), $this->renderImages());
     }
 
     /**
