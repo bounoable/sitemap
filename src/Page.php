@@ -24,9 +24,9 @@ class Page implements Renderable
     /**
      * The last modified date of the page.
      *
-     * @var \DateTimeInterface
+     * @var \DateTimeInterface|null
      */
-    protected $modified;
+    protected $modified = null;
 
     /**
      * The images of the page.
@@ -47,14 +47,17 @@ class Page implements Renderable
      *
      * @param  string  $location
      * @param  float  $priority
-     * @param  \DateTimeInterface|string  $modified
+     * @param  \DateTimeInterface|string|null  $modified
      * @return void
      */
-    public function __construct(string $location, float $priority, $modified)
+    public function __construct(string $location, float $priority, $modified = null)
     {
         $this->location = $location;
         $this->priority = $priority;
-        $this->modified = is_string($modified) ? \DateTime::createFromFormat(DateTime::ATOM, $modified) : $modified;
+
+        if (!is_null($modified)) {
+            $this->modified = is_string($modified) ? \DateTime::createFromFormat(DateTime::ATOM, $modified) : $modified;
+        }
     }
 
     /**
@@ -68,9 +71,9 @@ class Page implements Renderable
     /**
      * Get the last modified ATOM string.
      */
-    public function lastModified(): string
+    public function lastModified(): ?string
     {
-        return $this->modified->toAtomString();
+        return $this->modified ? $this->modified->toAtomString() : null;
     }
 
     /**
@@ -125,15 +128,17 @@ class Page implements Renderable
      */
     public function render(): string
     {
+        $lastModifiedTag = $this->lastModified() ? "<lastmod>{$this->lastModified()}</lastmod>" : '';
+
         return sprintf('
             <url>
                 <loc>%s</loc>
                 %s
-                <lastmod>%s</lastmod>
+                %s
                 <priority>%f</priority>
                 %s
             </url>
-        ', $this->location(), $this->renderLanguageLinks(), $this->lastModified(), round($this->priority(), 2), $this->renderImages());
+        ', $this->location(), $this->renderLanguageLinks(), $lastModifiedTag, round($this->priority(), 2), $this->renderImages());
     }
 
     /**
