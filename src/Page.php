@@ -133,7 +133,7 @@ class Page implements Renderable
                 <priority>%f</priority>
                 %s
             </url>
-        ', $this->location(), $this->renderLanguageLinks(), $this->lastModified(), $this->priority(), $this->renderImages());
+        ', $this->location(), $this->renderLanguageLinks(), $this->lastModified(), round($this->priority(), 2), $this->renderImages());
     }
 
     /**
