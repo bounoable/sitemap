@@ -1,0 +1,22 @@
+{
+    "name": "bounoable/sitemap",
+    "description": "XML Sitemap Tool",
+    "type": "library",
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Saman Hosseini",
+            "email": "bounoable@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Bounoable\\Sitemap\\": "src/"
+        }
+    },
+    "minimum-stability": "stable",
+    "require": {
+    },
+    "require-dev": {
+    }
+}
