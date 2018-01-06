@@ -36,6 +36,13 @@ class Page implements Renderable
     protected $images = [];
 
     /**
+     * The alternate hreflang tags.
+     *
+     * @var array
+     */
+    protected $languages = [];
+
+    /**
      * Create a page.
      *
      * @param  string  $location
@@ -93,6 +100,27 @@ class Page implements Renderable
     }
 
     /**
+     * Get the alternate language tags.
+     */
+    public function languages(): array
+    {
+        return $this->languages;
+    }
+
+    /**
+     * Add an alternate language tag.
+     */
+    public function language(string $hreflang, string $href): Page
+    {
+        $this->languages[] = [
+            'hreflang' => strtolower($hreflang),
+            'href' => $href,
+        ];
+
+        return $this;
+    }
+
+    /**
      * Render the page to an XML string.
      */
     public function render(): string
@@ -100,11 +128,22 @@ class Page implements Renderable
         return sprintf('
             <url>
                 <loc>%s</loc>
+                %s
                 <lastmod>%s</lastmod>
                 <priority>%f</priority>
                 %s
             </url>
-        ', $this->location(), $this->lastModified(), $this->priority(), $this->renderImages());
+        ', $this->location(), $this->renderLanguageLinks(), $this->lastModified(), $this->priority(), $this->renderImages());
+    }
+
+    /**
+     * Render the alternate language tags to an XML string.
+     */
+    protected function renderLanguageLinks(): string
+    {
+        return (string)implode("\n", array_map(function (array $alternate) {
+            return sprintf('<xhtml:link rel="alternate" hreflang="%s" href="%s" />', $alternate['hreflang'], $alternate['href']);
+        }, $this->languages()));
     }
 
     /**
