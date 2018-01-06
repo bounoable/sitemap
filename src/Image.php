@@ -32,10 +32,11 @@ class Image implements Renderable
      */
     public function render(): string
     {
-        return sprintf('
-            <image:image>
-                <image:loc>%s</image:loc>
-            </image:image>
-        ', $this->location());
+        return sprintf(<<<'EOD'
+<image:image>
+    <image:loc>%s</image:loc>
+</image:image>
+EOD
+        , $this->location());
     }
 }

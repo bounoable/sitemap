@@ -130,15 +130,16 @@ class Page implements Renderable
     {
         $lastModifiedTag = $this->lastModified() ? "<lastmod>{$this->lastModified()}</lastmod>" : '';
 
-        return sprintf('
-            <url>
-                <loc>%s</loc>
-                %s
-                %s
-                <priority>%.2f</priority>
-                %s
-            </url>
-        ', $this->location(), $this->renderLanguageLinks(), $lastModifiedTag, $this->priority(), $this->renderImages());
+        return sprintf(<<<'EOD'
+<url>
+    <loc>%s</loc>
+    %s
+    %s
+    <priority>%.2f</priority>
+    %s
+</url>
+EOD
+        , $this->location(), $this->renderLanguageLinks(), $lastModifiedTag, $this->priority(), $this->renderImages());
     }
 
     /**
@@ -146,7 +147,7 @@ class Page implements Renderable
      */
     protected function renderLanguageLinks(): string
     {
-        return (string)implode('', array_map(function (array $alternate) {
+        return (string)implode("\n", array_map(function (array $alternate) {
             return sprintf('<xhtml:link rel="alternate" hreflang="%s" href="%s" />', $alternate['hreflang'], $alternate['href']);
         }, $this->languages()));
     }
