@@ -95,9 +95,9 @@ class Page implements Renderable
     /**
      * Addd an image.
      */
-    public function image(string $location): Page
+    public function image(string $location, string $caption = null): Page
     {
-        $this->images[] = new Image($location);
+        $this->images[] = new Image($location, $caption);
 
         return $this;
     }
