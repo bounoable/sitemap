@@ -52,7 +52,7 @@ class Sitemap implements Renderable
      */
     protected function renderPages(): string
     {
-        return (string)implode("\n", array_map(function (Page $page) {
+        return (string)implode('', array_map(function (Page $page) {
             return $page->render();
         }, $this->pages()));
     }

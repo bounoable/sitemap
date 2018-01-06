@@ -146,7 +146,7 @@ class Page implements Renderable
      */
     protected function renderLanguageLinks(): string
     {
-        return (string)implode("\n", array_map(function (array $alternate) {
+        return (string)implode('', array_map(function (array $alternate) {
             return sprintf('<xhtml:link rel="alternate" hreflang="%s" href="%s" />', $alternate['hreflang'], $alternate['href']);
         }, $this->languages()));
     }
@@ -156,7 +156,7 @@ class Page implements Renderable
      */
     protected function renderImages(): string
     {
-        return (string)implode("\n", array_map(function (Image $image) {
+        return (string)implode('', array_map(function (Image $image) {
             return $image->render();
         }, $this->images()));
     }
