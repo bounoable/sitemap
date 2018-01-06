@@ -14,7 +14,7 @@ class Sitemap implements Renderable
     /**
      * Add a page to the sitemap.
      */
-    public function page(string $location, float $priority, \DateTimeInterface $modified): Page
+    public function page(string $location, float $priority, $modified = null): Page
     {
         $this->pages[] = $page = new Page($location, $priority, $modified);
 
